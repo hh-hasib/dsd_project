@@ -1,0 +1,16 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
+| Date         : Fri Apr 10 16:09:57 2026
+| Host         : DESKTOP-F9OUS67 running 64-bit major release  (build 9200)
+| Command      : report_bus_skew -warn_on_violation -file ac_basys3_top_bus_skew_routed.rpt -pb ac_basys3_top_bus_skew_routed.pb -rpx ac_basys3_top_bus_skew_routed.rpx
+| Design       : ac_basys3_top
+| Device       : 7a35ti-cpg236
+| Speed File   : -1L  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Bus Skew Report
+
+No bus skew constraints
+

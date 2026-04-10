@@ -1,0 +1,44 @@
+I need to build a roject for my digital dystem design laboratory. the project will conistent of designing a digital system, its combintional logic, rtl logic, ISA, fsm flow, registers, instructions, componnets etc. and implementig them in veriog HDL  and finally running the system in an artix 7 fpga with vivado. The project scope must have the following:
+
+a programmble system capble of taking inouts, processing and processing outputs
+
+register, intructions andmemory operations
+
+a clear architecture
+
+component inventory and module heirarchy
+
+clear connections between bus, register data connections, flag bits
+
+bus width and data flow, complete ISA, instruction format
+
+instruction execution flow
+
+control unit state machine
+
+test bench coverage.
+
+ I need the following diagrams: a tp-level cpu architecture block diagram, register connection and data flow diagram, instruction execution flow, fsm sate diagram, memory and buffer and other register orgamization. 
+
+You will generate a complete report on the project folowing thse instructns, and write verikog modules, testbnches and constraint file for basys 3 xc7a35ticpg236-1L FPGA.
+
+The project description and idea are the following:
+
+The project is a programmable alarm clock that will support up to 10 alarms, each with its own time. 
+The system will keep track of the time and will trigger the alarm when the current time matches any of the set alarm times. The user will be able to set the time and the alarms using buttons, and the current time and alarm status will be displayed on a 7-segment display.
+The system will consist of the following components:
+1. Clock Divider: This component will take the input clock signal and divide it down to a suitable frequency for the rest of the system.
+2. Timekeeping Unit: This component will keep track of the current time and will update it every second. It will also handle the logic for incrementing the time and rolling over when necessary (e.g., from 23:59 to 00:00).
+3. Alarm Unit: This component will store the alarm times and will compare them with the current time to determine when to trigger the alarm.
+4. When alarm rings, the LEDs will all keep blinking and a random nnumber will be generated and shown in the 7 segment display. thnuser must use the 16 switches and match that number,once the match happens, th alarm will tuen off and the alarm will be reovedfrom the alarm list. 
+5. The 16 LED outputs and the 4 7 segmnt outputs will  work differently. the 5 programmable switcher wil be used to swith modes.
+6. there will be 5 modes:
+a. the time mode: in this mode, the user can set the current time using the buttons. The 7-segment display will show the current time in HH:MM format.
+b. the set alarm mode: in this mode with the 16 input swiches and a progrmmable button to switch/accept values, the user can set the alarm times using the buttons. The 7-segment display will show the alarm times in HH:MM format.
+c. the show alarm mode: in this mode, the user can see the currntly set alarm with switch inputs for showing different alarm times. The 7-segment display will show the alarm times in HH:MM format. the LEDS will show which alarm slots are filled by lighting up the corresponding LED for each alarm slot. the currently selected alarm corresonding LED will blink to indicate the selection.
+d. the alarm ringing mode: in this mode, when the current time matches any of the set alarm times, the LEDs will blink and a pseudo-random number will be generated and displayed on the 7-segment display. The user must use the 16 switches to match that number. Once the match happens, the alarm will turn off and the alarm will be removed from the alarm list.
+e. the set time mode: in this mode, the user can set the current time using the buttons. The 7-segment display will show the current time in HH:MM format.
+when setting the time or alarm, the user will use the buttons to increment the hours and minutes, and a separate button to switch between hours and minutes. The 4 seven segment display will show the hh::mm formt time set, and the curently set slot will be indicated by keeping the 7 segment slot of that correponding time part blinking.
+
+The project must be build using modules made inveriog, everything except bitwise or boolean operations will be ilemented i moduoes, like half/full adder, adder-subractor control ciruit,comparator etc. andoders/decoders for the LED outputs, and 7 segmen putputs need to be designed also, and constraint file must be written f=to oerfectly support the FPGA. the system iwl b designed to be modular and fault tolran, and appropriate stateswill be shown via LEDs.
+study my prompt and carefylly builda complete imlementaionplan for 100% acurate and a+ worthy implementation of my proect. DO not do guesswork or make assumptions, ask if any clarifications are needed.
