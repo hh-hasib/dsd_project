@@ -11,7 +11,7 @@ module ac_basys3_top (
     output wire [6:0]  seg
 );
     // Mapping chosen for this implementation start:
-    // sw[15]  -> system reset
+    // sw[15]  -> mode-2/mode-3 cancel toggle (R2)
     // btnU    -> mode cycle
     // btnR    -> confirm/accept
     // btnL    -> hour increment
@@ -20,7 +20,7 @@ module ac_basys3_top (
 
     ac_alarm_clock_soc_top u_soc (
         .clk          (clk),
-        .reset_sw     (sw[15]),
+        .reset_sw     (1'b0),
         .sw           (sw),
         .btn_mode     (btnU),
         .btn_confirm  (btnR),

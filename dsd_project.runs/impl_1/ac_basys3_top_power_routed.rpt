@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date             : Fri Apr 10 16:09:57 2026
+| Date             : Sat Apr 11 19:05:53 2026
 | Host             : DESKTOP-F9OUS67 running 64-bit major release  (build 9200)
 | Command          : report_power -file ac_basys3_top_power_routed.rpt -pb ac_basys3_top_power_summary_routed.pb -rpx ac_basys3_top_power_routed.rpx
 | Design           : ac_basys3_top
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.081        |
+| Total On-Chip Power (W)  | 0.073        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.019        |
+| Dynamic (W)              | 0.011        |
 | Device Static (W)        | 0.062        |
 | Effective TJA (C/W)      | 5.0          |
 | Max Ambient (C)          | 99.6         |
@@ -52,17 +52,17 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Clocks         |     0.002 |        3 |       --- |             --- |
-| Slice Logic    |    <0.001 |      781 |       --- |             --- |
-|   LUT as Logic |    <0.001 |      415 |     20800 |            2.00 |
-|   CARRY4       |    <0.001 |       26 |      8150 |            0.32 |
-|   Register     |    <0.001 |      273 |     41600 |            0.66 |
-|   F7/F8 Muxes  |    <0.001 |        1 |     32600 |           <0.01 |
-|   Others       |     0.000 |       11 |       --- |             --- |
-| Signals        |     0.001 |      689 |       --- |             --- |
-| I/O            |     0.015 |       45 |       106 |           42.45 |
+| Clocks         |     0.003 |        3 |       --- |             --- |
+| Slice Logic    |    <0.001 |     1456 |       --- |             --- |
+|   LUT as Logic |    <0.001 |      756 |     20800 |            3.63 |
+|   CARRY4       |    <0.001 |       59 |      8150 |            0.72 |
+|   Register     |    <0.001 |      496 |     41600 |            1.19 |
+|   F7/F8 Muxes  |    <0.001 |       13 |     32600 |            0.04 |
+|   Others       |     0.000 |       23 |       --- |             --- |
+| Signals        |    <0.001 |     1176 |       --- |             --- |
+| I/O            |     0.007 |       38 |       106 |           35.85 |
 | Static Power   |     0.062 |          |           |                 |
-| Total          |     0.081 |          |           |                 |
+| Total          |     0.073 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -73,8 +73,8 @@ Table of Contents
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Vccint    |       0.950 |     0.010 |       0.004 |      0.006 |       NA    | Unspecified | NA         |
-| Vccaux    |       1.800 |     0.012 |       0.001 |      0.011 |       NA    | Unspecified | NA         |
-| Vcco33    |       3.300 |     0.005 |       0.004 |      0.001 |       NA    | Unspecified | NA         |
+| Vccaux    |       1.800 |     0.012 |       0.000 |      0.011 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     0.003 |       0.002 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -138,13 +138,12 @@ Table of Contents
 3.1 By Hierarchy
 ----------------
 
-+-----------------+-----------+
-| Name            | Power (W) |
-+-----------------+-----------+
-| ac_basys3_top   |     0.019 |
-|   u_soc         |     0.004 |
-|     u_alarm_tbl |     0.001 |
-|     u_mode      |     0.001 |
-+-----------------+-----------+
++---------------+-----------+
+| Name          | Power (W) |
++---------------+-----------+
+| ac_basys3_top |     0.011 |
+|   u_soc       |     0.004 |
+|     u_mode    |     0.001 |
++---------------+-----------+
 
 

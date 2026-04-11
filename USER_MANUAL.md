@@ -4,285 +4,237 @@
 
 ## 1. Purpose
 
-This manual explains how to build, program, and use the programmable alarm clock project on a Basys3 board.
-
-It is written for:
-
-- Lab users demonstrating functionality on hardware
-- Reviewers validating project behavior
-- Developers testing the current RTL build
+This manual describes how to build and use the current alarm-clock implementation on Basys3 with the new 6-mode behavior.
 
 ## 2. Project Summary
 
-The design is a modular FPGA system with:
+The active design includes:
 
-- 16-bit custom CPU subsystem
-- Real-time clock (HH:MM:SS)
+- 16-bit CPU subsystem (Harvard, multi-cycle)
+- RTC clock (HH:MM:SS)
 - 10-slot alarm table
-- 5 operating modes
-- 16 LEDs + 4-digit 7-segment display interface
-- 4-bit random challenge to dismiss alarms
+- 6-mode UI flow with constrained transitions
+- Snooze (+5/+10 min) and alarm-disable challenge mode
+- 16 LEDs + 4-digit 7-segment output
 
 ## 3. Requirements
 
-## 3.1 Hardware
+### 3.1 Hardware
 
-- Digilent Basys3 FPGA board (xc7a35tcpg236-1)
-- USB cable for power and programming
+- Digilent Basys3 (xc7a35tcpg236-1L)
+- USB cable for programming/power
 
-## 3.2 Software
+### 3.2 Software
 
-- Vivado 2023.1 (recommended to match project file)
+- Vivado 2023.1
 
-## 3.3 Project Files
+### 3.3 Project Files
 
-- Top module: dsd_project.srcs/sources_1/new/top/ac_basys3_top.v
-- Constraints: dsd_project.srcs/constrs_1/new/basys3.xdc
-- Vivado project: dsd_project.xpr
+- Top wrapper: `dsd_project.srcs/sources_1/new/top/ac_basys3_top.v`
+- SoC top: `dsd_project.srcs/sources_1/new/top/ac_alarm_clock_soc_top.v`
+- Constraints: `dsd_project.srcs/constrs_1/new/basys3.xdc`
+- Project file: `dsd_project.xpr`
 
 ## 4. Build and Program
 
-1. Open dsd_project.xpr in Vivado.
-2. Confirm top module is ac_basys3_top.
-3. Confirm constraints set includes basys3.xdc.
-4. Run Synthesis.
-5. Run Implementation.
-6. Generate Bitstream.
-7. Open Hardware Manager and program the Basys3.
+1. Open `dsd_project.xpr` in Vivado.
+2. Confirm top module is `ac_basys3_top`.
+3. Confirm `basys3.xdc` is active in `constrs_1`.
+4. Run Synthesis, Implementation, and Generate Bitstream.
+5. Program the Basys3 from Hardware Manager.
 
 ## 5. Front Panel Control Map
 
-## 5.1 Inputs
+### 5.1 Inputs
 
-| Board Control | RTL Port      | Function                               |
-| ------------- | ------------- | -------------------------------------- |
-| 100 MHz clock | clk           | Main system clock                      |
-| SW[15]        | reset_sw      | System reset (active high)             |
-| SW[15:0]      | sw            | Mode-dependent data entry              |
-| BTN U         | btn_mode      | Cycle mode                             |
-| BTN R         | btn_confirm   | Confirm/apply action                   |
-| BTN L         | btn_hour_up   | Reserved in current top-level behavior |
-| BTN D         | btn_min_up    | Reserved in current top-level behavior |
-| BTN C         | btn_field_sel | Reserved in current top-level behavior |
+| Board Control | RTL Signal      | Active Use                            |
+| ------------- | --------------- | ------------------------------------- |
+| 100 MHz clock | `clk`           | Main clock                            |
+| SW[15:0]      | `sw`            | mode-dependent input                  |
+| BTN U         | `btn_mode`      | mode cycle / minute+ / snooze+5       |
+| BTN R         | `btn_confirm`   | slot+ / hour+ / confirm disable       |
+| BTN L         | `btn_hour_up`   | slot- / hour-                         |
+| BTN D         | `btn_min_up`    | enter set-alarm / minute- / snooze+10 |
+| BTN C         | `btn_field_sel` | clear/save/enter-disable              |
+| SW15 edge     | cancel toggle   | cancel edit in modes 2 and 3          |
 
-## 5.2 Outputs
+Note: `reset_sw` is tied low in the wrapper, so SW15 is used for cancel-toggle behavior instead of hard reset.
 
-| Board Output | RTL Port | Function                            |
-| ------------ | -------- | ----------------------------------- |
-| LED[15:0]    | led      | Alarm status and ring indication    |
-| AN[3:0]      | an       | 7-segment digit anodes (active low) |
-| SEG[6:0]     | seg      | 7-segment segments (active low)     |
+### 5.2 Outputs
+
+| Board Output | RTL Port | Function                         |
+| ------------ | -------- | -------------------------------- |
+| LED[15:0]    | `led`    | occupancy, mode, ringing, status |
+| AN[3:0]      | `an`     | active-low digit enables         |
+| SEG[6:0]     | `seg`    | active-low segment outputs       |
 
 ## 6. Modes and Behavior
 
-The system defines 5 modes and cycles with BTN U.
+Mode IDs:
 
-Mode sequence:
-TIME -> SET_ALARM -> SHOW_ALARM -> RINGING -> SET_TIME -> TIME
+- Mode 0: Show Time
+- Mode 1: Show Alarms
+- Mode 2: Set Alarm
+- Mode 3: Set Time
+- Mode 4: Ringing
+- Mode 5: Alarm Disable
 
-## 6.1 Mode 0: TIME
+Transition contract:
 
-Purpose:
+- Normal cycle with BTN U: `0 -> 1 -> 3 -> 0`
+- Mode 2 entry only from mode 1 via BTN D
+- Mode 4 entry only when an alarm match occurs
+- Mode 5 entry only from mode 4 via BTN C
 
-- Display current time in HH:MM
+### 6.1 Mode 0: Show Time
 
-Display:
+- 7-seg shows current `HHMM`
+- LED[9:0] indicate alarm occupancy
+- BTN U moves to mode 1
 
-- 7-seg shows current hour and minute
+### 6.2 Mode 1: Show Alarms
 
-## 6.2 Mode 1: SET_ALARM
+- Displays selected slot alarm `HHMM` if valid, otherwise `AAAA`
+- BTN L selects previous slot (wrap 0<-9)
+- BTN R selects next slot (wrap 9->0)
+- BTN C clears selected slot
+- BTN D enters mode 2 for selected slot
 
-Purpose:
+### 6.3 Mode 2: Set Alarm
 
-- Write alarm time into selected slot
+- Edits selected slot alarm time
+- BTN L decrements hour
+- BTN R increments hour
+- BTN U increments minute
+- BTN D decrements minute
+- BTN C saves alarm and returns to mode 1
+- SW15 toggle cancels edit and returns to mode 1
+- Duplicate alarm time is rejected and triggers status LED pulses
 
-Inputs:
+### 6.4 Mode 3: Set Time
 
-- Slot index: SW[3:0] (valid slots 0..9)
-- Alarm hour: SW[15:11]
-- Alarm minute: SW[10:5]
-- Commit: BTN R
+- Edits RTC time staging values
+- BTN L decrements hour
+- BTN D decrements minute
+- BTN C commits edited time and returns to mode 0
+- SW15 toggle cancels and returns to mode 0
+- BTN U still follows normal cycle path from mode 3 to mode 0
 
-Result:
+### 6.5 Mode 4: Ringing
 
-- Selected alarm slot is marked valid
-
-## 6.3 Mode 2: SHOW_ALARM
-
-Purpose:
-
-- View stored alarm in selected slot
-
-Inputs:
-
-- Slot index: SW[3:0]
-
-Display:
-
-- If slot valid: HH:MM of that alarm
-- If slot invalid: blank pattern (decoder default)
-
-LEDs:
-
-- LED[9:0] show valid slot bitmap
-- Selected valid slot LED blinks
-
-## 6.4 Mode 3: RINGING
-
-Entry conditions:
-
-- Automatically entered when current HH:MM matches an active alarm
-- Also reachable in cycle path via BTN U
-
-Behavior:
-
+- Entered automatically on alarm match
+- 7-seg shows `ALrM`
 - All LEDs blink
-- 7-seg shows random challenge value (00XY format)
+- BTN U snoozes +5 minutes and returns to mode 0
+- BTN D snoozes +10 minutes and returns to mode 0
+- BTN C enters mode 5 (alarm disable challenge)
 
-Dismiss condition:
+### 6.6 Mode 5: Alarm Disable
 
-- Set SW[3:0] equal to current challenge value
-- Matching clears the triggered alarm slot and exits ringing latch
+- 7-seg shows challenge format `[blank][HEX][O][F]`
+- User enters HEX value with `SW[3:0]`
+- BTN R confirms challenge
+- Correct value clears the active alarm and returns to mode 0
+- Wrong value triggers status LED pulses, regenerates challenge, stays in mode 5
+- BTN U/BTN D provide snooze +5/+10 and return to mode 0
 
-## 6.5 Mode 4: SET_TIME
+## 7. Typical Workflows
 
-Purpose:
+### 7.1 Set Current Time
 
-- Set RTC hour/minute directly from switches
+1. Press BTN U until mode 3.
+2. Adjust values with BTN L and BTN D.
+3. Press BTN C to commit.
 
-Inputs:
+### 7.2 Browse and Edit an Alarm
 
-- Hour: SW[15:11]
-- Minute: SW[10:5]
-- Commit: BTN R
+1. Press BTN U to reach mode 1.
+2. Use BTN L/BTN R to pick slot.
+3. Press BTN D to enter mode 2.
+4. Adjust time with BTN L/BTN R/BTN U/BTN D.
+5. Press BTN C to save.
 
-Result:
+### 7.3 Clear an Alarm Slot
 
-- RTC time loaded and seconds reset to 00
+1. In mode 1, select slot.
+2. Press BTN C to clear it.
 
-## 7. Typical User Workflows
+### 7.4 Handle Ringing
 
-## 7.1 Power-up and Reset
-
-1. Program bitstream.
-2. Put SW15 low for normal operation.
-3. If needed, set SW15 high briefly to reset, then return low.
-
-## 7.2 Set Current Time
-
-1. Press BTN U until SET_TIME mode.
-2. Set hour on SW[15:11], minute on SW[10:5].
-3. Press BTN R to commit.
-4. Return to TIME mode to monitor clock.
-
-## 7.3 Add an Alarm
-
-1. Press BTN U until SET_ALARM mode.
-2. Select slot on SW[3:0] (0..9).
-3. Set alarm hour on SW[15:11], minute on SW[10:5].
-4. Press BTN R.
-5. Go to SHOW_ALARM to confirm.
-
-## 7.4 Browse Alarms
-
-1. Press BTN U until SHOW_ALARM mode.
-2. Move SW[3:0] to desired slot.
-3. Read HH:MM on display; check LED bitmap for valid slots.
-
-## 7.5 Dismiss Ringing Alarm
-
-1. Wait until ringing occurs (or enter mode path for demo).
-2. Read challenge value on display (low two digits).
-3. Set SW[3:0] to match challenge nibble.
-4. Alarm clears and ringing stops.
+1. On alarm trigger, mode 4 starts (`ALrM` display).
+2. Choose snooze (BTN U or BTN D) or disable path (BTN C).
+3. If disabling, enter challenge value on SW[3:0] and press BTN R.
 
 ## 8. Display and LED Reference
 
-## 8.1 7-Segment Display
+### 8.1 7-Segment Output
 
-| Mode       | Display Content                            |
-| ---------- | ------------------------------------------ |
-| TIME       | Current HH:MM                              |
-| SET_ALARM  | Selected alarm HH:MM if valid/just written |
-| SHOW_ALARM | Selected alarm HH:MM (or blank if invalid) |
-| RINGING    | 00 + challenge value                       |
-| SET_TIME   | Current HH:MM after commit                 |
+| Mode | Display                         |
+| ---- | ------------------------------- |
+| 0    | current time `HHMM`             |
+| 1    | selected alarm `HHMM` or `AAAA` |
+| 2    | edited alarm time `HHMM`        |
+| 3    | edited time `HHMM`              |
+| 4    | `ALrM`                          |
+| 5    | `[blank][HEX][O][F]`            |
 
-## 8.2 LED Behavior
+### 8.2 LED Policy
 
-| Condition                         | LED Output                      |
-| --------------------------------- | ------------------------------- |
-| Normal (non-ringing)              | LED[9:0] show valid alarm slots |
-| SHOW_ALARM on valid selected slot | Selected LED blinks             |
-| RINGING                           | All LEDs blink                  |
+| LED Bits | Meaning                            |
+| -------- | ---------------------------------- |
+| LED[9:0] | alarm occupancy map (slot 0..9)    |
+| LED[10]  | mode 0 indicator                   |
+| LED[11]  | mode 1 indicator                   |
+| LED[12]  | mode 2 indicator                   |
+| LED[13]  | mode 3 indicator                   |
+| LED[14]  | mode 4 indicator; blinks in mode 5 |
+| LED[15]  | status/error indicator             |
 
-## 9. Current Build Notes and Limitations
+Special behavior:
 
-1. BTN L, BTN D, BTN C are debounced and pulse-generated but not yet consumed by top-level set logic.
-2. QSPI persistence block is currently a stub boundary module; alarms are not truly non-volatile yet.
-3. SW15 is mapped to reset and also overlaps the hour-entry field SW[15:11]. Keep SW15 low during normal entry to avoid unintended reset.
-4. Alarm matching compares at minute resolution (HH:MM) using current design logic.
+- Mode 1: selected slot LED blinks
+- Mode 4: all LEDs blink
+- Error condition: LED[15] pulses three times
+
+## 9. Current Build Notes
+
+1. QSPI persistence remains a stub boundary module.
+2. Alarm matching is minute-level (`HH:MM`).
+3. SW15 is consumed as cancel-toggle input in edit modes.
 
 ## 10. Troubleshooting
 
-## 10.1 No activity on board
+### 10.1 No board activity
 
-- Verify USB cable and board power.
-- Confirm bitstream programming succeeded.
-- Confirm SW15 is low after reset.
+- Verify board power and programming success.
+- Confirm top module and constraints are correct.
 
-## 10.2 Vivado reports port or constraint mismatch
+### 10.2 Cannot enter Set Alarm mode
 
-- Confirm top module is ac_basys3_top.
-- Confirm basys3.xdc is active in constrs_1.
-- Re-run Synthesis after project refresh.
+- You must be in mode 1 first.
+- Press BTN D to enter mode 2.
 
-## 10.3 Time/alarm not setting
+### 10.3 Alarm disable challenge fails repeatedly
 
-- Ensure you are in correct mode.
-- After setting switches, press BTN R to commit.
-- Keep SW15 low to avoid reset interruption.
+- Ensure SW[3:0] matches displayed HEX digit.
+- Press BTN R to confirm.
 
-## 10.4 Alarm does not clear in ringing mode
+### 10.4 Status LED blinks 3 pulses
 
-- Match SW[3:0] exactly to displayed challenge nibble.
-- Wait for challenge update if blinking/stepping.
+- In mode 2: likely duplicate alarm time.
+- In mode 5: wrong challenge input.
 
-## 10.5 Old warnings referencing top_clock
+## 11. Demo Checklist
 
-- Ensure legacy alarmClock.v is not active in source set.
-- Confirm project top is ac_basys3_top.
+- Clock runs in mode 0
+- Alarm browse/select works in mode 1
+- Save/cancel path works in modes 2 and 3
+- Ringing enters mode 4 on match
+- Snooze +5/+10 paths work
+- Disable challenge clears alarm on correct HEX input
 
-## 11. Verification Checklist for Demo Day
+## 12. Revision
 
-- System enters TIME mode and clock runs
-- SET_TIME commit updates HH:MM
-- SET_ALARM writes slots 0..9
-- SHOW_ALARM displays selected slot and occupancy LEDs
-- Ringing activates on match
-- Challenge-match clears alarm and stops ringing
-- No critical synthesis/implementation errors
-
-## 12. Safety and Good Practice
-
-- Do not rapidly toggle reset during programming.
-- Keep one known-good bitstream checkpoint for fallback.
-- Save Vivado run logs and timing reports for lab submission.
-
-## 13. Quick Reference Card
-
-| Action            | Control              |
-| ----------------- | -------------------- |
-| Cycle mode        | BTN U                |
-| Confirm action    | BTN R                |
-| Reset system      | SW15 high            |
-| Select alarm slot | SW[3:0]              |
-| Set hour          | SW[15:11]            |
-| Set minute        | SW[10:5]             |
-| Stop ringing      | SW[3:0] == challenge |
-
-## 14. Revision
-
-- Manual version: 1.0
-- Date: 2026-04-10
-- Target design top: ac_basys3_top
+- Manual version: 2.0
+- Date: 2026-04-11
+- Target top: `ac_basys3_top`

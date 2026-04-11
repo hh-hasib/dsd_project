@@ -4,7 +4,7 @@
 
 ## 1. Abstract
 
-This report presents a modular Verilog HDL implementation of a programmable alarm clock system for the Basys3 FPGA board. The design uses a 16-bit custom CPU (Harvard architecture) with a multi-cycle control unit, dedicated alarm-clock peripherals, and strict low-level module decomposition (logic gates, adders, subtractor, comparator, multiplexers, decoders, input conditioning blocks). The system supports five operating modes, up to ten alarms, real-time timekeeping, alarm matching, random challenge-based alarm dismissal, and visual feedback on LEDs and 7-segment display.
+This report presents a modular Verilog HDL implementation of a programmable alarm clock system for the Basys3 FPGA board. The design uses a 16-bit custom CPU (Harvard architecture) with a multi-cycle control unit, dedicated alarm-clock peripherals, and strict low-level module decomposition (logic gates, adders, subtractor, comparator, multiplexers, decoders, input conditioning blocks). The system supports six operating modes with constrained transitions, up to ten alarms, real-time timekeeping, alarm matching, snooze and challenge-based disable flows, and visual feedback on LEDs and 7-segment display.
 
 The report includes architecture, ISA, bus/data widths, control FSM flow, module hierarchy, memory and register organization, verification strategy, and FPGA integration guidance. All figures are provided as Graphviz DOT source ready for Graphviz editor compilation.
 
@@ -14,17 +14,20 @@ The report includes architecture, ISA, bus/data widths, control FSM flow, module
 
 ### 2.1 Functional Requirements
 
-| ID   | Requirement                                                     | Implementation Target                         |
-| ---- | --------------------------------------------------------------- | --------------------------------------------- |
-| FR-1 | Programmable digital system taking inputs and producing outputs | CPU + peripherals + GPIO/display              |
-| FR-2 | Register, instruction, and memory operations                    | 16-bit CPU, register file, ROM/RAM            |
-| FR-3 | Track current time and trigger alarms                           | RTC + alarm comparator logic                  |
-| FR-4 | Support up to 10 alarms                                         | 10-entry alarm table                          |
-| FR-5 | Alarm ringing behavior with blinking LEDs                       | LED controller in ringing mode                |
-| FR-6 | Random value challenge to stop alarm                            | 4-bit LFSR + switch matching                  |
-| FR-7 | 5 operating modes                                               | Mode manager FSM                              |
-| FR-8 | Show slot occupancy and selection                               | valid_bitmap + selected LED blink             |
-| FR-9 | Testbench coverage                                              | primitive/cpu/subsystem/integration test plan |
+| ID    | Requirement                                                     | Implementation Target                         |
+| ----- | --------------------------------------------------------------- | --------------------------------------------- |
+| FR-1  | Programmable digital system taking inputs and producing outputs | CPU + peripherals + GPIO/display              |
+| FR-2  | Register, instruction, and memory operations                    | 16-bit CPU, register file, ROM/RAM            |
+| FR-3  | Track current time and trigger alarms                           | RTC + alarm comparator logic                  |
+| FR-4  | Support up to 10 alarms                                         | 10-entry alarm table                          |
+| FR-5  | Alarm ringing behavior with blinking LEDs                       | LED controller in ringing mode                |
+| FR-6  | Random value challenge to stop alarm                            | 4-bit LFSR + switch matching                  |
+| FR-7  | 6 operating modes with entry constraints                        | Mode manager + top-level transaction control  |
+| FR-8  | Show slot occupancy and selection                               | valid_bitmap + selected LED blink             |
+| FR-9  | Snooze operations (+5, +10 minutes)                             | dedicated snooze arithmetic module            |
+| FR-10 | Alarm-disable challenge flow                                    | random nibble + compare + retry handling      |
+| FR-11 | Error feedback via status LED                                   | 3 pulses at 1s ON/OFF                         |
+| FR-12 | Testbench coverage                                              | primitive/cpu/subsystem/integration test plan |
 
 ### 2.2 Deliverables
 
@@ -34,7 +37,7 @@ The report includes architecture, ISA, bus/data widths, control FSM flow, module
 | D-2 | Register/data-flow diagram           | Included (Graphviz, Fig. 2)                    |
 | D-3 | Instruction execution flow           | Included (Graphviz, Fig. 3)                    |
 | D-4 | FSM state diagram                    | Included (Graphviz, Fig. 4 and Fig. 5)         |
-| D-5 | Memory/buffer/register organization  | Included (Graphviz, Fig. 6)                    |
+| D-5 | Memory/buffer/register organization  | Included (Graphviz, Fig. 7)                    |
 | D-6 | Modular Verilog RTL                  | Implemented scaffold in structured directories |
 | D-7 | Testbenches                          | Starter benches included                       |
 | D-8 | Basys3 constraints                   | Constraint plan provided in this report        |
@@ -365,24 +368,26 @@ digraph CPU_FSM {
 
 ### 8.1 Operating Modes
 
-| Mode ID | Name               | Behavior                                      |
-| ------: | ------------------ | --------------------------------------------- |
-|       0 | Time Mode          | Show current HH:MM                            |
-|       1 | Set Alarm Mode     | Write selected alarm slot using switch inputs |
-|       2 | Show Alarm Mode    | View selected slot, blink selected valid LED  |
-|       3 | Alarm Ringing Mode | Blink all LEDs, show random challenge         |
-|       4 | Set Time Mode      | Commit new HH:MM from switch inputs           |
+| Mode ID | Name          | Behavior                                            |
+| ------: | ------------- | --------------------------------------------------- |
+|       0 | Show Time     | Display current HH:MM                               |
+|       1 | Show Alarms   | Browse selected slot, show HH:MM or AAAA            |
+|       2 | Set Alarm     | Edit selected slot HH:MM, duplicate-check on save   |
+|       3 | Set Time      | Edit RTC HH:MM staging buffer and commit            |
+|       4 | Ringing       | Display ALrM, blink all LEDs                        |
+|       5 | Alarm Disable | Display challenge + OF, confirm hex input or snooze |
 
 ### 8.2 Mode Inputs
 
-| Input         | Source     | Function                           |
-| ------------- | ---------- | ---------------------------------- |
-| btn_mode      | pushbutton | cycle mode 0->1->2->3->4->0        |
-| btn_confirm   | pushbutton | commit selected action             |
-| btn_hour_up   | pushbutton | hour increment/control extension   |
-| btn_min_up    | pushbutton | minute increment/control extension |
-| btn_field_sel | pushbutton | field select/context control       |
-| sw[15:0]      | switches   | mode-dependent data input          |
+| Input         | Source     | Function                                                                         |
+| ------------- | ---------- | -------------------------------------------------------------------------------- |
+| btn_mode      | pushbutton | cycle `0 -> 1 -> 3 -> 0`; minute increment in mode 2; snooze +5 in modes 4/5     |
+| btn_confirm   | pushbutton | slot increment in mode 1; hour increment in mode 2; disable confirm in mode 5    |
+| btn_hour_up   | pushbutton | slot decrement in mode 1; hour decrement in modes 2/3                            |
+| btn_min_up    | pushbutton | enter mode 2 from mode 1; minute decrement in modes 2/3; snooze +10 in modes 4/5 |
+| btn_field_sel | pushbutton | clear selected slot in mode 1; save in modes 2/3; enter mode 5 from mode 4       |
+| sw[3:0]       | switches   | challenge input in mode 5                                                        |
+| sw[15] edge   | switch     | cancel toggle in modes 2 and 3                                                   |
 
 ### 8.3 Figure 6: Mode Manager FSM
 
@@ -394,17 +399,31 @@ digraph ModeFSM {
   graph [fontsize=10, labelloc=t, label="Figure 6. System Mode FSM"];
   node [shape=ellipse, fontsize=10];
 
-  TIME [label="Mode 0\nTIME"];
-  SET_ALARM [label="Mode 1\nSET_ALARM"];
-  SHOW_ALARM [label="Mode 2\nSHOW_ALARM"];
-  RINGING [label="Mode 3\nRINGING"];
-  SET_TIME [label="Mode 4\nSET_TIME"];
+  M0 [label="Mode 0\nSHOW_TIME"];
+  M1 [label="Mode 1\nSHOW_ALARMS"];
+  M2 [label="Mode 2\nSET_ALARM"];
+  M3 [label="Mode 3\nSET_TIME"];
+  M4 [label="Mode 4\nRINGING"];
+  M5 [label="Mode 5\nALARM_DISABLE"];
 
-  TIME -> SET_ALARM [label="btn_mode"];
-  SET_ALARM -> SHOW_ALARM [label="btn_mode"];
-  SHOW_ALARM -> RINGING [label="btn_mode or alarm event"];
-  RINGING -> SET_TIME [label="btn_mode or challenge matched"];
-  SET_TIME -> TIME [label="btn_mode"];
+  M0 -> M1 [label="btn_mode"];
+  M1 -> M3 [label="btn_mode"];
+  M3 -> M0 [label="btn_mode"];
+
+  M1 -> M2 [label="btn_min_up"];
+  M2 -> M1 [label="save(btn_field_sel) or cancel(sw15 edge)"];
+
+  M3 -> M0 [label="save(btn_field_sel) or cancel(sw15 edge)"];
+
+  M0 -> M4 [label="alarm_match"];
+  M1 -> M4 [label="alarm_match"];
+  M2 -> M4 [label="alarm_match"];
+  M3 -> M4 [label="alarm_match"];
+
+  M4 -> M0 [label="snooze +5/+10"];
+  M4 -> M5 [label="btn_field_sel"];
+  M5 -> M0 [label="disable confirm success or snooze"];
+  M5 -> M5 [label="wrong code (new challenge)"];
 }
 ```
 
@@ -471,22 +490,23 @@ digraph MemoryOrg {
 
 ### 10.2 Test Matrix
 
-| Test ID           | Testbench / Method   | Target                              |
-| ----------------- | -------------------- | ----------------------------------- |
-| TB-PRIM-ADD       | tb_ac_ripple_adder16 | adder correctness/carry behavior    |
-| TB-CPU-SMOKE      | tb_ac_cpu16_smoke    | CPU fetch/decode/loop behavior      |
-| TB-RTC-ROLLOVER   | planned              | 23:59:59 -> 00:00:00                |
-| TB-ALARM-MATCH    | planned              | slot compare and priority           |
-| TB-MODE-FSM       | planned              | mode transitions and pulse handling |
-| TB-RING-CHALLENGE | planned              | random code and clear condition     |
-| TB-DISPLAY        | planned              | mode-specific digit output          |
-| TB-LED            | planned              | occupancy, blink, ringing patterns  |
-| TB-PERSIST        | planned              | save/load alarm dataset             |
+| Test ID            | Testbench / Method       | Target                                        |
+| ------------------ | ------------------------ | --------------------------------------------- |
+| TB-PRIM-ADD        | tb_ac_ripple_adder16     | adder correctness/carry behavior              |
+| TB-CPU-SMOKE       | tb_ac_cpu16_smoke        | CPU fetch/decode/loop behavior                |
+| TB-SNOOZE          | tb_ac_snooze_calc        | +5/+10 rollover at minute/hour/day boundaries |
+| TB-MODE-FSM-6MODE  | tb_ac_mode_manager_6mode | constrained cycle and force-mode behavior     |
+| TB-RTC-ROLLOVER    | planned                  | 23:59:59 -> 00:00:00                          |
+| TB-ALARM-MATCH     | planned                  | slot compare and priority                     |
+| TB-DISABLE-FLOW    | planned                  | mode 5 confirm/retry/snooze behavior          |
+| TB-DISPLAY-SYMBOLS | planned                  | ALrM and OF symbol rendering                  |
+| TB-LED-POLICY      | planned                  | occupancy, mode indicators, error status      |
+| TB-PERSIST         | planned                  | save/load alarm dataset                       |
 
 ### 10.3 Coverage Goals
 
 - Opcode coverage: 100% of implemented opcodes
-- Mode coverage: all 5 modes exercised
+- Mode coverage: all 6 modes exercised
 - Alarm coverage: add/show/match/clear with 10 slots
 - Edge cases: reset behavior, empty/full alarm set, simultaneous matches
 
@@ -529,16 +549,18 @@ digraph MemoryOrg {
 
 - Structured hierarchy with top/cpu/peripherals/primitives folders
 - Multi-cycle CPU scaffold with documented ISA mapping
-- RTC, alarm table, mode manager, LFSR, LED/display formatting
+- 6-mode constrained behavior with dedicated ringing/disable paths
+- RTC, alarm table with duplicate check, mode manager, LFSR, snooze arithmetic
+- Symbol-based display formatting (including ALrM and challenge/OF pattern)
+- LED policy with occupancy, mode indicators, ringing blink, and status LED handling
 - Basys3 wrapper and integration top module
-- Starter testbenches for arithmetic and CPU smoke
+- Starter plus focused redesign testbenches (snooze + mode manager)
 
 ### 12.2 Pending for Completion
 
 - Replace QSPI persistence stub with full runtime flash transaction controller
-- Add complete opcode regression testbench suite
-- Add full subsystem and integration testbenches
-- Finalize and commit Basys3 XDC pin file
+- Add full subsystem/integration regressions for disable and error timing
+- Expand CPU opcode regression suite beyond smoke level
 - Run synthesis/implementation timing closure and board-level validation
 
 ---
@@ -551,7 +573,7 @@ digraph MemoryOrg {
 4. Add XDC constraints for Basys3.
 5. Run synthesis/implementation/bitstream.
 6. Run testbenches from dsd_project.sim/tb.
-7. Validate all 5 modes and alarm scenarios on hardware.
+7. Validate all 6 modes and ring/disable/snooze scenarios on hardware.
 
 ---
 

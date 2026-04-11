@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date         : Fri Apr 10 16:08:02 2026
+| Date         : Sat Apr 11 19:03:42 2026
 | Host         : DESKTOP-F9OUS67 running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file ac_basys3_top_control_sets_placed.rpt
 | Design       : ac_basys3_top
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |    18 |
-|    Minimum number of control sets                        |    18 |
+| Total control sets                                       |    34 |
+|    Minimum number of control sets                        |    34 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    79 |
+| Unused register locations in slices containing registers |   144 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,15 +39,15 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |    18 |
-| >= 0 to < 4        |     0 |
-| >= 4 to < 6        |     2 |
-| >= 6 to < 8        |     2 |
+| Total control sets |    34 |
+| >= 0 to < 4        |     1 |
+| >= 4 to < 6        |     7 |
+| >= 6 to < 8        |     4 |
 | >= 8 to < 10       |     1 |
-| >= 10 to < 12      |    10 |
+| >= 10 to < 12      |    12 |
 | >= 12 to < 14      |     0 |
 | >= 14 to < 16      |     0 |
-| >= 16              |     3 |
+| >= 16              |     9 |
 +--------------------+-------+
 * Control sets can be remapped at either synth_design or opt_design
 
@@ -58,11 +58,11 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |               0 |            0 |
-| No           | No                    | Yes                    |              95 |           37 |
+| No           | No                    | No                     |               1 |            1 |
+| No           | No                    | Yes                    |             134 |           56 |
 | No           | Yes                   | No                     |               0 |            0 |
-| Yes          | No                    | No                     |               0 |            0 |
-| Yes          | No                    | Yes                    |             178 |           56 |
+| Yes          | No                    | No                     |              24 |            6 |
+| Yes          | No                    | Yes                    |             337 |          122 |
 | Yes          | Yes                   | No                     |               0 |            0 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
@@ -70,27 +70,43 @@ Table of Contents
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------+--------------------------------------------------+------------------+------------------+----------------+--------------+
-|  Clock Signal  |                   Enable Signal                  | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------+--------------------------------------------------+------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG | u_soc/u_challenge/value[3]_i_1_n_0               | sw_IBUF[15]      |                2 |              4 |         2.00 |
-|  clk_IBUF_BUFG | u_soc/u_mode/u_ep_c/E[0]                         | sw_IBUF[15]      |                2 |              5 |         2.50 |
-|  clk_IBUF_BUFG | u_soc/u_mode/u_ep_c/tick_1hz_reg[0]              | sw_IBUF[15]      |                3 |              6 |         2.00 |
-|  clk_IBUF_BUFG | u_soc/u_mode/u_ep_c/pulse_out_reg_0[0]           | sw_IBUF[15]      |                3 |              6 |         2.00 |
-|  clk_IBUF_BUFG | u_soc/u_clkdiv/tick_scan                         | sw_IBUF[15]      |                3 |              9 |         3.00 |
-|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_hour[0][4]_i_1_n_0       | sw_IBUF[15]      |                3 |             11 |         3.67 |
-|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_hour[1][4]_i_1_n_0       | sw_IBUF[15]      |                4 |             11 |         2.75 |
-|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_hour[2][4]_i_1_n_0       | sw_IBUF[15]      |                3 |             11 |         3.67 |
-|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_hour[4][4]_i_1_n_0       | sw_IBUF[15]      |                4 |             11 |         2.75 |
-|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_hour[6][4]_i_1_n_0       | sw_IBUF[15]      |                3 |             11 |         3.67 |
-|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_hour[5][4]_i_1_n_0       | sw_IBUF[15]      |                3 |             11 |         3.67 |
-|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_hour[3][4]_i_1_n_0       | sw_IBUF[15]      |                3 |             11 |         3.67 |
-|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_hour[7][4]_i_1_n_0       | sw_IBUF[15]      |                4 |             11 |         2.75 |
-|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_hour[9][4]_i_1_n_0       | sw_IBUF[15]      |                3 |             11 |         3.67 |
-|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_hour[8][4]_i_1_n_0       | sw_IBUF[15]      |                3 |             11 |         3.67 |
-|  clk_IBUF_BUFG | u_soc/u_mode/u_db_c/stable_counter[0]_i_1__0_n_0 | sw_IBUF[15]      |                5 |             19 |         3.80 |
-|  clk_IBUF_BUFG | u_soc/u_mode/u_db_mode/stable_counter[0]_i_1_n_0 | sw_IBUF[15]      |                5 |             19 |         3.80 |
-|  clk_IBUF_BUFG |                                                  | sw_IBUF[15]      |               37 |             95 |         2.57 |
-+----------------+--------------------------------------------------+------------------+------------------+----------------+--------------+
++----------------+-----------------------------------------------------+------------------+------------------+----------------+--------------+
+|  Clock Signal  |                    Enable Signal                    | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+-----------------------------------------------------+------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG |                                                     |                  |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG | u_soc/u_mode/force_mode_en1                         | u_soc/por_reset  |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_soc/u_challenge/value[3]_i_1_n_0                  | u_soc/por_reset  |                2 |              4 |         2.00 |
+|  clk_IBUF_BUFG | u_soc/u_mode/u_ep_c/mode_reg[2][0]                  | u_soc/por_reset  |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_soc/u_mode/u_ep_f/E[0]                            | u_soc/por_reset  |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_soc/u_rtc/hour[4]_i_1_n_0                         | u_soc/por_reset  |                2 |              5 |         2.50 |
+|  clk_IBUF_BUFG | u_soc/u_mode/u_ep_h/mode_reg[0][0]                  | u_soc/por_reset  |                3 |              5 |         1.67 |
+|  clk_IBUF_BUFG | u_soc/u_mode/u_ep_h/mode_reg[0]_0[0]                | u_soc/por_reset  |                3 |              5 |         1.67 |
+|  clk_IBUF_BUFG | u_soc/u_mode/u_ep_m/pulse_out_reg_1[0]              | u_soc/por_reset  |                6 |              6 |         1.00 |
+|  clk_IBUF_BUFG | u_soc/u_clkdiv/tick_1hz_reg_0[0]                    | u_soc/por_reset  |                2 |              6 |         3.00 |
+|  clk_IBUF_BUFG | u_soc/u_clkdiv/E[0]                                 | u_soc/por_reset  |                3 |              6 |         2.00 |
+|  clk_IBUF_BUFG | u_soc/u_mode/u_ep_m/mode_reg[0][0]                  | u_soc/por_reset  |                2 |              6 |         3.00 |
+|  clk_IBUF_BUFG | u_soc/u_clkdiv/tick_scan                            | u_soc/por_reset  |                3 |              9 |         3.00 |
+|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_valid15_out                 | u_soc/por_reset  |                3 |             11 |         3.67 |
+|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_hour[9][4]_i_1_n_0          | u_soc/por_reset  |                5 |             11 |         2.20 |
+|  clk_IBUF_BUFG | u_soc/u_mode/u_ep_f/cancel_toggle_reg[0]            | u_soc/por_reset  |                6 |             11 |         1.83 |
+|  clk_IBUF_BUFG | u_soc/u_mode/u_ep_mode/mode_reg[2][0]               | u_soc/por_reset  |                7 |             11 |         1.57 |
+|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_valid7_out                  | u_soc/por_reset  |                5 |             11 |         2.20 |
+|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_valid11_out                 | u_soc/por_reset  |                5 |             11 |         2.20 |
+|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_valid13_out                 | u_soc/por_reset  |                5 |             11 |         2.20 |
+|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_hour[0][4]_i_1_n_0          | u_soc/por_reset  |                4 |             11 |         2.75 |
+|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_valid9_out                  | u_soc/por_reset  |                5 |             11 |         2.20 |
+|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_valid17_out                 | u_soc/por_reset  |                3 |             11 |         3.67 |
+|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_valid5_out                  | u_soc/por_reset  |                4 |             11 |         2.75 |
+|  clk_IBUF_BUFG | u_soc/u_alarm_tbl/alarm_valid19_out                 | u_soc/por_reset  |                4 |             11 |         2.75 |
+|  clk_IBUF_BUFG | u_soc/u_mode/u_db_h/stable_counter[0]_i_1__2_n_0    | u_soc/por_reset  |                5 |             19 |         3.80 |
+|  clk_IBUF_BUFG | u_soc/u_db_sw15/stable_counter[0]_i_1_n_0           | u_soc/por_reset  |                5 |             19 |         3.80 |
+|  clk_IBUF_BUFG | u_soc/u_mode/u_db_f/stable_counter[0]_i_1__4_n_0    | u_soc/por_reset  |                5 |             19 |         3.80 |
+|  clk_IBUF_BUFG | u_soc/u_mode/u_db_mode/stable_counter[0]_i_1__0_n_0 | u_soc/por_reset  |                5 |             19 |         3.80 |
+|  clk_IBUF_BUFG | u_soc/u_mode/u_db_m/stable_counter[0]_i_1__3_n_0    | u_soc/por_reset  |                5 |             19 |         3.80 |
+|  clk_IBUF_BUFG | u_soc/u_mode/u_db_c/stable_counter[0]_i_1__1_n_0    | u_soc/por_reset  |                5 |             19 |         3.80 |
+|  clk_IBUF_BUFG | u_soc/por_reset                                     |                  |                6 |             24 |         4.00 |
+|  clk_IBUF_BUFG | u_soc/err_counter[26]_i_1_n_0                       | u_soc/por_reset  |                6 |             27 |         4.50 |
+|  clk_IBUF_BUFG |                                                     | u_soc/por_reset  |               56 |            134 |         2.39 |
++----------------+-----------------------------------------------------+------------------+------------------+----------------+--------------+
 
 

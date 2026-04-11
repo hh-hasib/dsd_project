@@ -15,6 +15,11 @@ module ac_alarm_table10 (
     input  wire [5:0] curr_min,
     output reg        match_found,
     output reg  [3:0] match_slot,
+    input  wire       chk_en,
+    input  wire [4:0] chk_hour,
+    input  wire [5:0] chk_min,
+    input  wire [3:0] chk_exclude_slot,
+    output reg        chk_duplicate,
     output wire [9:0] valid_bitmap
 );
     reg [4:0] alarm_hour [0:9];
@@ -69,6 +74,17 @@ module ac_alarm_table10 (
         end
         match_found = found_local;
         match_slot  = slot_local;
+    end
+
+    always @(*) begin
+        chk_duplicate = 1'b0;
+        if (chk_en) begin
+            for (i = 0; i < 10; i = i + 1) begin
+                if ((i[3:0] != chk_exclude_slot) && alarm_valid[i] && (alarm_hour[i] == chk_hour) && (alarm_min[i] == chk_min)) begin
+                    chk_duplicate = 1'b1;
+                end
+            end
+        end
     end
 
     assign valid_bitmap = {

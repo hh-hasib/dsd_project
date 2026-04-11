@@ -3,8 +3,8 @@
 # SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
 # IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
 # SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
-# Start of session at: Fri Apr 10 16:02:10 2026
-# Process ID: 1064
+# Start of session at: Sat Apr 11 18:57:28 2026
+# Process ID: 11976
 # Current directory: E:/4-2/DSD_Lab/dsd_project/dsd_project.runs/synth_1
 # Command line: vivado.exe -log ac_basys3_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source ac_basys3_top.tcl
 # Log file: E:/4-2/DSD_Lab/dsd_project/dsd_project.runs/synth_1/ac_basys3_top.vds
@@ -12,22 +12,17 @@
 # Running On: DESKTOP-F9OUS67, OS: Windows, CPU Frequency: 2712 MHz, CPU Physical cores: 2, Host memory: 17006 MB
 #-----------------------------------------------------------
 source ac_basys3_top.tcl -notrace
-create_project: Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 439.215 ; gain = 163.559
-Command: read_checkpoint -auto_incremental -incremental E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/utils_1/imports/synth_1/ac_mux2_16.dcp
-INFO: [Vivado 12-5825] Read reference checkpoint from E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/utils_1/imports/synth_1/ac_mux2_16.dcp for incremental synthesis
-INFO: [Vivado 12-7989] Please ensure there are no constraint changes
+create_project: Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 438.141 ; gain = 164.047
 Command: synth_design -top ac_basys3_top -part xc7a35ticpg236-1L
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35ti'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35ti'
 INFO: [Device 21-403] Loading part xc7a35ticpg236-1L
-INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
-INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 400
+INFO: [Synth 8-7075] Helper process launched with PID 2324
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 1254.055 ; gain = 410.230
+Starting RTL Elaboration : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 1251.203 ; gain = 410.203
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'ac_basys3_top' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/top/ac_basys3_top.v:1]
 INFO: [Synth 8-6157] synthesizing module 'ac_alarm_clock_soc_top' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/top/ac_alarm_clock_soc_top.v:1]
@@ -43,25 +38,7 @@ INFO: [Synth 8-6157] synthesizing module 'ac_rtc_timekeeper' [E:/4-2/DSD_Lab/dsd
 INFO: [Synth 8-6155] done synthesizing module 'ac_rtc_timekeeper' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_rtc_timekeeper.v:1]
 INFO: [Synth 8-6157] synthesizing module 'ac_alarm_table10' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_alarm_table10.v:1]
 INFO: [Synth 8-6155] done synthesizing module 'ac_alarm_table10' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_alarm_table10.v:1]
-INFO: [Synth 8-6157] synthesizing module 'ac_lfsr4' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_lfsr4.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'ac_lfsr4' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_lfsr4.v:1]
-INFO: [Synth 8-6157] synthesizing module 'ac_led_controller' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_led_controller.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'ac_led_controller' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_led_controller.v:1]
-INFO: [Synth 8-6157] synthesizing module 'ac_display_formatter' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_display_formatter.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'ac_display_formatter' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_display_formatter.v:1]
-INFO: [Synth 8-6157] synthesizing module 'ac_seg7_mux4' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_seg7_mux4.v:1]
-INFO: [Synth 8-226] default block is never used [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_seg7_mux4.v:24]
-INFO: [Synth 8-6157] synthesizing module 'ac_bcd_to_7seg' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_bcd_to_7seg.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'ac_bcd_to_7seg' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_bcd_to_7seg.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'ac_seg7_mux4' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_seg7_mux4.v:1]
-INFO: [Synth 8-6157] synthesizing module 'ac_instr_rom16' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_instr_rom16.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'ac_instr_rom16' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_instr_rom16.v:1]
-INFO: [Synth 8-6157] synthesizing module 'ac_data_ram16' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_data_ram16.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'ac_data_ram16' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_data_ram16.v:1]
-INFO: [Synth 8-6157] synthesizing module 'ac_cpu16_core' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_cpu16_core.v:1]
-INFO: [Synth 8-6157] synthesizing module 'ac_register_file16' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_register_file16.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'ac_register_file16' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_register_file16.v:1]
-INFO: [Synth 8-6157] synthesizing module 'ac_alu16' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_alu16.v:1]
+INFO: [Synth 8-6157] synthesizing module 'ac_snooze_calc' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_snooze_calc.v:1]
 INFO: [Synth 8-6157] synthesizing module 'ac_adder_subtractor16' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_adder_subtractor16.v:1]
 INFO: [Synth 8-6157] synthesizing module 'ac_xor_gate' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_logic_gates.v:17]
 INFO: [Synth 8-6155] done synthesizing module 'ac_xor_gate' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_logic_gates.v:17]
@@ -78,6 +55,26 @@ INFO: [Synth 8-6155] done synthesizing module 'ac_ripple_adder16' (0#1) [E:/4-2/
 INFO: [Synth 8-6155] done synthesizing module 'ac_adder_subtractor16' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_adder_subtractor16.v:1]
 INFO: [Synth 8-6157] synthesizing module 'ac_comparator16' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_comparator16.v:1]
 INFO: [Synth 8-6155] done synthesizing module 'ac_comparator16' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_comparator16.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'ac_snooze_calc' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_snooze_calc.v:1]
+INFO: [Synth 8-6157] synthesizing module 'ac_lfsr4' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_lfsr4.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'ac_lfsr4' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_lfsr4.v:1]
+INFO: [Synth 8-6157] synthesizing module 'ac_led_controller' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_led_controller.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'ac_led_controller' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_led_controller.v:1]
+INFO: [Synth 8-6157] synthesizing module 'ac_display_formatter' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_display_formatter.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'ac_display_formatter' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_display_formatter.v:1]
+INFO: [Synth 8-6157] synthesizing module 'ac_seg7_mux4' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_seg7_mux4.v:1]
+INFO: [Synth 8-226] default block is never used [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_seg7_mux4.v:24]
+INFO: [Synth 8-6157] synthesizing module 'ac_symbol_to_7seg' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_symbol_to_7seg.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'ac_symbol_to_7seg' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_symbol_to_7seg.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'ac_seg7_mux4' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_seg7_mux4.v:1]
+INFO: [Synth 8-6157] synthesizing module 'ac_instr_rom16' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_instr_rom16.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'ac_instr_rom16' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_instr_rom16.v:1]
+INFO: [Synth 8-6157] synthesizing module 'ac_data_ram16' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_data_ram16.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'ac_data_ram16' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_data_ram16.v:1]
+INFO: [Synth 8-6157] synthesizing module 'ac_cpu16_core' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_cpu16_core.v:1]
+INFO: [Synth 8-6157] synthesizing module 'ac_register_file16' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_register_file16.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'ac_register_file16' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_register_file16.v:1]
+INFO: [Synth 8-6157] synthesizing module 'ac_alu16' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_alu16.v:1]
 INFO: [Synth 8-6155] done synthesizing module 'ac_alu16' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_alu16.v:1]
 INFO: [Synth 8-6155] done synthesizing module 'ac_cpu16_core' (0#1) [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_cpu16_core.v:1]
 INFO: [Synth 8-6157] synthesizing module 'ac_qspi_persistence_stub' [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_qspi_persistence_stub.v:1]
@@ -87,20 +84,30 @@ INFO: [Synth 8-6155] done synthesizing module 'ac_basys3_top' (0#1) [E:/4-2/DSD_
 WARNING: [Synth 8-6014] Unused sequential element flag_zero_reg was removed.  [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_cpu16_core.v:121]
 WARNING: [Synth 8-6014] Unused sequential element flag_carry_reg was removed.  [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_cpu16_core.v:122]
 WARNING: [Synth 8-6014] Unused sequential element flag_lt_reg was removed.  [E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_cpu16_core.v:123]
+WARNING: [Synth 8-7129] Port sw[14] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[13] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[12] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[11] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[10] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[9] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[8] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[7] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[6] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[5] in module ac_alarm_clock_soc_top is either unconnected or has no load
 WARNING: [Synth 8-7129] Port sw[4] in module ac_alarm_clock_soc_top is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:25 ; elapsed = 00:00:28 . Memory (MB): peak = 1355.590 ; gain = 511.766
+Finished RTL Elaboration : Time (s): cpu = 00:00:26 ; elapsed = 00:00:27 . Memory (MB): peak = 1358.207 ; gain = 517.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:26 ; elapsed = 00:00:28 . Memory (MB): peak = 1355.590 ; gain = 511.766
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:26 ; elapsed = 00:00:27 . Memory (MB): peak = 1358.207 ; gain = 517.207
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:26 ; elapsed = 00:00:28 . Memory (MB): peak = 1355.590 ; gain = 511.766
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:26 ; elapsed = 00:00:27 . Memory (MB): peak = 1358.207 ; gain = 517.207
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.095 . Memory (MB): peak = 1355.590 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.193 . Memory (MB): peak = 1358.207 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -111,28 +118,26 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/ac_basys3_top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1460.656 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.036 . Memory (MB): peak = 1456.391 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.022 . Memory (MB): peak = 1460.656 ; gain = 0.000
-INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
-INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.041 . Memory (MB): peak = 1456.391 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:52 ; elapsed = 00:00:55 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished Constraint Validation : Time (s): cpu = 00:00:54 ; elapsed = 00:00:56 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35ticpg236-1L
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:52 ; elapsed = 00:00:55 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:54 ; elapsed = 00:00:56 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:52 ; elapsed = 00:00:55 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:54 ; elapsed = 00:00:56 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'ac_cpu16_core'
 ---------------------------------------------------------------------------------------------------
@@ -147,7 +152,7 @@ INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'ac_cp
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'ac_cpu16_core'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:56 ; elapsed = 00:00:59 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:59 ; elapsed = 00:01:01 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -155,46 +160,55 @@ Start RTL Component Statistics
 Detailed RTL Component Info : 
 +---Adders : 
 	   2 Input   32 Bit       Adders := 2     
+	   2 Input   27 Bit       Adders := 1     
 	   2 Input    8 Bit       Adders := 3     
 	   2 Input    7 Bit       Adders := 1     
-	   2 Input    6 Bit       Adders := 2     
-	   2 Input    5 Bit       Adders := 1     
+	   2 Input    6 Bit       Adders := 5     
+	   2 Input    5 Bit       Adders := 5     
+	   2 Input    4 Bit       Adders := 2     
 	   2 Input    3 Bit       Adders := 1     
 	   2 Input    2 Bit       Adders := 1     
 +---XORs : 
 	   2 Input     16 Bit         XORs := 1     
-	   2 Input      1 Bit         XORs := 97    
+	   2 Input      1 Bit         XORs := 674   
 +---Registers : 
 	              110 Bit    Registers := 2     
 	               32 Bit    Registers := 2     
+	               27 Bit    Registers := 1     
 	               16 Bit    Registers := 11    
 	                8 Bit    Registers := 4     
 	                7 Bit    Registers := 1     
-	                6 Bit    Registers := 12    
-	                5 Bit    Registers := 11    
-	                4 Bit    Registers := 2     
-	                3 Bit    Registers := 2     
+	                6 Bit    Registers := 16    
+	                5 Bit    Registers := 15    
+	                4 Bit    Registers := 5     
+	                3 Bit    Registers := 5     
 	                2 Bit    Registers := 1     
-	                1 Bit    Registers := 52    
+	                1 Bit    Registers := 65    
 +---Muxes : 
 	   2 Input   32 Bit        Muxes := 2     
+	   2 Input   27 Bit        Muxes := 2     
 	   2 Input   16 Bit        Muxes := 5     
 	   9 Input   16 Bit        Muxes := 2     
 	   6 Input   16 Bit        Muxes := 1     
 	  10 Input    8 Bit        Muxes := 1     
 	   6 Input    8 Bit        Muxes := 1     
-	   2 Input    6 Bit        Muxes := 6     
-	   6 Input    6 Bit        Muxes := 1     
+	   2 Input    6 Bit        Muxes := 16    
+	   6 Input    6 Bit        Muxes := 3     
 	  10 Input    6 Bit        Muxes := 1     
-	   2 Input    5 Bit        Muxes := 4     
-	   2 Input    4 Bit        Muxes := 9     
-	   4 Input    4 Bit        Muxes := 6     
-	   6 Input    4 Bit        Muxes := 1     
-	   2 Input    3 Bit        Muxes := 2     
+	   2 Input    5 Bit        Muxes := 16    
+	   4 Input    5 Bit        Muxes := 1     
+	   6 Input    5 Bit        Muxes := 2     
+	   2 Input    4 Bit        Muxes := 13    
+	   4 Input    4 Bit        Muxes := 1     
+	   6 Input    4 Bit        Muxes := 2     
+	   5 Input    3 Bit        Muxes := 1     
 	   9 Input    3 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 94    
-	  10 Input    1 Bit        Muxes := 5     
-	   6 Input    1 Bit        Muxes := 7     
+	   2 Input    3 Bit        Muxes := 2     
+	   8 Input    3 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 129   
+	   4 Input    1 Bit        Muxes := 1     
+	  10 Input    1 Bit        Muxes := 6     
+	   6 Input    1 Bit        Muxes := 20    
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -211,33 +225,58 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-7129] Port sw[14] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[13] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[12] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[11] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[10] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[9] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[8] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[7] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[6] in module ac_alarm_clock_soc_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sw[5] in module ac_alarm_clock_soc_top is either unconnected or has no load
 WARNING: [Synth 8-7129] Port sw[4] in module ac_alarm_clock_soc_top is either unconnected or has no load
-WARNING: [Synth 8-3332] Sequential element (u_soc/u_cpu/FSM_onehot_state_reg[5]) is unused and will be removed from module ac_basys3_top.
-WARNING: [Synth 8-3332] Sequential element (u_soc/u_cpu/FSM_onehot_state_reg[4]) is unused and will be removed from module ac_basys3_top.
-WARNING: [Synth 8-3332] Sequential element (u_soc/u_cpu/FSM_onehot_state_reg[3]) is unused and will be removed from module ac_basys3_top.
-WARNING: [Synth 8-3332] Sequential element (u_soc/u_cpu/FSM_onehot_state_reg[2]) is unused and will be removed from module ac_basys3_top.
-WARNING: [Synth 8-3332] Sequential element (u_soc/u_cpu/FSM_onehot_state_reg[1]) is unused and will be removed from module ac_basys3_top.
-WARNING: [Synth 8-3332] Sequential element (u_soc/u_cpu/FSM_onehot_state_reg[0]) is unused and will be removed from module ac_basys3_top.
+WARNING: [Synth 8-3332] Sequential element (FSM_onehot_state_reg[5]) is unused and will be removed from module ac_cpu16_core.
+WARNING: [Synth 8-3332] Sequential element (FSM_onehot_state_reg[4]) is unused and will be removed from module ac_cpu16_core.
+WARNING: [Synth 8-3332] Sequential element (FSM_onehot_state_reg[3]) is unused and will be removed from module ac_cpu16_core.
+WARNING: [Synth 8-3332] Sequential element (FSM_onehot_state_reg[2]) is unused and will be removed from module ac_cpu16_core.
+WARNING: [Synth 8-3332] Sequential element (FSM_onehot_state_reg[1]) is unused and will be removed from module ac_cpu16_core.
+WARNING: [Synth 8-3332] Sequential element (FSM_onehot_state_reg[0]) is unused and will be removed from module ac_cpu16_core.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:48 ; elapsed = 00:01:53 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:47 ; elapsed = 00:01:50 . Memory (MB): peak = 1456.391 ; gain = 615.391
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+ROM: Preliminary Mapping Report
++------------------+------------+---------------+----------------+
+|Module Name       | RTL Object | Depth x Width | Implemented As | 
++------------------+------------+---------------+----------------+
+|ac_symbol_to_7seg | seg        | 32x7          | LUT            | 
+|ac_seg7_mux4      | u_sym/seg  | 32x7          | LUT            | 
++------------------+------------+---------------+----------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:05 ; elapsed = 00:02:10 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:04 ; elapsed = 00:02:07 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:02:23 ; elapsed = 00:02:29 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished Timing Optimization : Time (s): cpu = 00:02:08 ; elapsed = 00:02:11 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:02:25 ; elapsed = 00:02:31 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished Technology Mapping : Time (s): cpu = 00:02:10 ; elapsed = 00:02:13 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -255,37 +294,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:02:53 ; elapsed = 00:03:00 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished IO Insertion : Time (s): cpu = 00:02:38 ; elapsed = 00:02:42 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:02:53 ; elapsed = 00:03:00 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished Renaming Generated Instances : Time (s): cpu = 00:02:38 ; elapsed = 00:02:42 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:53 ; elapsed = 00:03:00 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:38 ; elapsed = 00:02:42 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:02:53 ; elapsed = 00:03:00 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished Renaming Generated Ports : Time (s): cpu = 00:02:38 ; elapsed = 00:02:42 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:02:53 ; elapsed = 00:03:00 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:38 ; elapsed = 00:02:42 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:02:53 ; elapsed = 00:03:00 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished Renaming Generated Nets : Time (s): cpu = 00:02:38 ; elapsed = 00:02:42 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -302,40 +341,42 @@ Report Cell Usage:
 |      |Cell   |Count |
 +------+-------+------+
 |1     |BUFG   |     1|
-|2     |CARRY4 |    26|
-|3     |LUT1   |     4|
-|4     |LUT2   |    36|
-|5     |LUT3   |    60|
-|6     |LUT4   |    69|
-|7     |LUT5   |   131|
-|8     |LUT6   |   170|
-|9     |MUXF7  |     1|
-|10    |FDCE   |   271|
-|11    |FDPE   |     2|
-|12    |IBUF   |    18|
-|13    |OBUF   |    27|
+|2     |CARRY4 |    59|
+|3     |LUT1   |     6|
+|4     |LUT2   |    80|
+|5     |LUT3   |   175|
+|6     |LUT4   |   128|
+|7     |LUT5   |   211|
+|8     |LUT6   |   265|
+|9     |MUXF7  |    10|
+|10    |MUXF8  |     3|
+|11    |FDCE   |   469|
+|12    |FDPE   |     2|
+|13    |FDRE   |    25|
+|14    |IBUF   |    11|
+|15    |OBUF   |    27|
 +------+-------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:02:53 ; elapsed = 00:03:00 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Finished Writing Synthesis Report : Time (s): cpu = 00:02:39 ; elapsed = 00:02:42 . Memory (MB): peak = 1456.391 ; gain = 615.391
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 8 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:02:22 ; elapsed = 00:02:54 . Memory (MB): peak = 1460.656 ; gain = 511.766
-Synthesis Optimization Complete : Time (s): cpu = 00:02:54 ; elapsed = 00:03:00 . Memory (MB): peak = 1460.656 ; gain = 616.832
+Synthesis finished with 0 errors, 0 critical warnings and 18 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:02:05 ; elapsed = 00:02:35 . Memory (MB): peak = 1456.391 ; gain = 517.207
+Synthesis Optimization Complete : Time (s): cpu = 00:02:39 ; elapsed = 00:02:43 . Memory (MB): peak = 1456.391 ; gain = 615.391
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.045 . Memory (MB): peak = 1460.656 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 27 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.082 . Memory (MB): peak = 1456.391 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 72 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1460.656 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1456.391 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete | Checksum: 499a4054
+Synth Design complete | Checksum: 64af5c79
 INFO: [Common 17-83] Releasing license: Synthesis
-78 Infos, 12 Warnings, 0 Critical Warnings and 0 Errors encountered.
+74 Infos, 32 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:03:09 ; elapsed = 00:03:17 . Memory (MB): peak = 1460.656 ; gain = 996.551
+synth_design: Time (s): cpu = 00:02:53 ; elapsed = 00:02:58 . Memory (MB): peak = 1456.391 ; gain = 1018.246
 INFO: [Common 17-1381] The checkpoint 'E:/4-2/DSD_Lab/dsd_project/dsd_project.runs/synth_1/ac_basys3_top.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file ac_basys3_top_utilization_synth.rpt -pb ac_basys3_top_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Fri Apr 10 16:05:56 2026...
+INFO: [Common 17-206] Exiting Vivado at Sat Apr 11 19:00:56 2026...

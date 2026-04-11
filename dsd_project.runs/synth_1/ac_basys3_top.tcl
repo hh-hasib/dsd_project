@@ -71,8 +71,7 @@ proc create_report { reportName command } {
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param checkpoint.writeSynthRtdsInDcp 1
-set_param chipscope.maxJobs 1
-set_param synth.incrementalSynthesisCache C:/Users/hhhas/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-9500-DESKTOP-F9OUS67/incrSyn
+set_param synth.incrementalSynthesisCache C:/Users/hhhas/AppData/Roaming/Xilinx/Vivado/.Xil/Vivado-1788-DESKTOP-F9OUS67/incrSyn
 set_param xicom.use_bs_reader 1
 set_msg_config -id {Synth 8-256} -limit 10000
 set_msg_config -id {Synth 8-638} -limit 10000
@@ -95,7 +94,6 @@ read_verilog -library xil_defaultlib {
   E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/top/ac_alarm_clock_soc_top.v
   E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_alarm_table10.v
   E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_alu16.v
-  E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_bcd_to_7seg.v
   E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_clock_divider.v
   E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_comparator16.v
   E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/cpu/ac_cpu16_core.v
@@ -114,6 +112,8 @@ read_verilog -library xil_defaultlib {
   E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_ripple_adder16.v
   E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_rtc_timekeeper.v
   E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_seg7_mux4.v
+  E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/peripherals/ac_snooze_calc.v
+  E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/primitives/ac_symbol_to_7seg.v
   E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/sources_1/new/top/ac_basys3_top.v
 }
 OPTRACE "Adding files" END { }
@@ -129,8 +129,6 @@ read_xdc E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/constrs_1/new/basys3.xdc
 set_property used_in_implementation false [get_files E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/constrs_1/new/basys3.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
-
-read_checkpoint -auto_incremental -incremental E:/4-2/DSD_Lab/dsd_project/dsd_project.srcs/utils_1/imports/synth_1/ac_mux2_16.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
